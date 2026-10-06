@@ -1,0 +1,66 @@
+body {
+    font-family: 'Lato', Arial, sans-serif;
+    font-size: 1.25rem;
+    line-height: 1.2;
+    margin: 8px;
+}
+
+h1,
+h2 {
+    text-align: center;
+}
+
+#about h2,
+#favorites h2,
+#wish h2 {
+    color: #4aa8a8;
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 1.8rem;
+    margin: 0.5rem 0;
+}
+
+#header,
+#title {
+    text-align: center;
+}
+
+
+#about {
+    display: flex;
+    align-items: flex-start;
+}
+
+#about img {
+    width: 33%;
+    height: auto;
+    display: block;
+}
+
+.about-text {
+    flex: 1;
+}
+
+.about-text p {
+    margin: 0;
+}
+
+#favorites {
+    margin-top: 2rem;
+}
+
+#fav {
+    display: flex;
+    justify-content: space-around;
+}
+
+#fav ol {
+    margin: 0;
+    padding: 0;
+    list-style-position: inside;
+    text-align: center;
+}
+
+#wish p {
+    margin: 0;
+}

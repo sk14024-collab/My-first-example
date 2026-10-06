@@ -1,0 +1,76 @@
+import csv
+import math
+import pandas as pd
+
+
+def main():
+    try:
+        with open("ages.txt", "w") as f:
+            f.write("12.4,15.8,16.1")
+
+        n = int(input("Enter n: "))
+        if n <= 0:
+            raise ValueError("n must be a positive integer.")
+
+        with open("ages.txt", "r") as f:
+            numbers = [float(x) for x in f.read().split(",") if x.strip()]
+
+        if len(numbers) < n:
+            print(f"The file contains only {len(numbers)} numbers, "
+                  f"which is less than {n}. Using all available numbers.")
+        ages = numbers[:n]
+
+        ages = [math.floor(a) for a in ages]
+
+        with open("scores.csv", "w", newline="") as f:
+            f.write("Name,Score\nAndrew,88.3\nBen,92.6\nCarol,89.7\n")
+
+        dic = {"Name": [], "Score": []}
+        with open("scores.csv", "r", newline="") as f:
+            for row in csv.DictReader(f):
+                dic["Name"].append(row["Name"])
+                dic["Score"].append(float(row["Score"]))
+
+        if len(ages) < len(dic["Name"]):
+            raise ValueError(f"Only {len(ages)} ages available, but "
+                             f"{len(dic['Name'])} rows are in scores.csv.")
+        ages = ages[:len(dic["Name"])]
+        dic = {"Name": dic["Name"], "Age": ages, "Score": dic["Score"]}
+
+        df = pd.DataFrame(dic)
+        print(df)
+
+        print("Maximum age:", df["Age"].max())
+
+        new_row = pd.DataFrame([{"Name": "Daniel", "Age": 10, "Score": 78.0}])
+        df = pd.concat([df, new_row], ignore_index=True)
+
+    
+        p = float(input("Enter deduction p: "))
+        df.loc[1, "Score"] = df.loc[1, "Score"] - p
+
+        df["Score"] = df["Score"].apply(lambda s: math.ceil(round(s * 2, 9)) / 2)
+
+        print("Updated DataFrame:")
+        print(df)
+        print("Mean Score:", df["Score"].mean())
+        print("Median Score:", df["Score"].median())
+
+
+        df_filtered = df[(df["Age"] >= 12) & (df["Age"] <= 15)]
+        print("Filtered DataFrame:")
+        print(df_filtered)
+        
+        print("Mean Score in Filtered DataFrame:", df_filtered["Score"].mean())
+        print("Median Score:", df_filtered["Score"].median())
+
+    except FileNotFoundError as e:
+        print("File error: could not find the file.", e)
+    except ValueError as e:
+        print("Invalid value:", e)
+    except Exception as e:
+        print("An unexpected error occurred:", e)
+
+
+if __name__ == "__main__":
+    main()
