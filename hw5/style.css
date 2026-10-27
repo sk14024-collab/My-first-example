@@ -13,11 +13,12 @@ body {
     max-width: 1400px;
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 14px;
 }
 
 .container > * {
     background-color: lightblue;
+    height: 200px;
     font-size: 10rem;
     color: blue;
     border: 2px dashed blue;
