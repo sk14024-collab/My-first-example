@@ -1,0 +1,35 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: url("https://cdn.imgchest.com/files/l4necm53l4m.png");
+    opacity: .5;
+    background-repeat: no-repeat;
+}
+
+.container {
+    max-width: 1350px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.container > * {
+    background-color: lightblue;
+    font-size: 10rem;
+    color: blue;
+    border: 2px dashed blue;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.box1 { flex-basis: 100%; }
+
+.box2,
+.box3 { flex-basis: 680px; }
+
+.box4,
+.box5,
+.box6 { flex-basis: 450px; }
