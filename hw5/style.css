@@ -28,8 +28,8 @@ body {
 
 .box1 { flex-basis: 100%; }
 
-.box2,
-.box3 { flex-basis: 680px; }
+.box2 { flex-basis: 301px; }
+.box3 { flex-basis: 700px; }
 
 .box4,
 .box5,
