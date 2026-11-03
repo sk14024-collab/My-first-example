@@ -1,17 +1,19 @@
 """Lab Assignment #2: Data Visualization (Oscar winners)."""
+import os
+from pathlib import Path
+FILE_NAME = Path(__file__).parent / "oscars.xlsx"
 import sys
 import zipfile
 
 import matplotlib
-matplotlib.use("Agg")  # рисуем в файл, без окна; убери эту строку, если нужен plt.show()
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
 
 FILE_NAME = "oscars.xlsx"
-REQUIRED_COLUMNS = ["gender", "category"]  # сравнение без учёта регистра
+REQUIRED_COLUMNS = ["gender", "category"]
 
 
-# ---------- 1-2. Загрузка данных ----------
 def load_data(path):
     try:
         df = pd.read_excel(path)
@@ -29,7 +31,7 @@ def load_data(path):
     if df.empty:
         sys.exit("Ошибка: файл не содержит данных.")
 
-    # приводим названия колонок к нижнему регистру, убираем пробелы
+
     df.columns = [str(c).strip().lower() for c in df.columns]
 
     missing = [c for c in REQUIRED_COLUMNS if c not in df.columns]
@@ -39,11 +41,9 @@ def load_data(path):
     return df
 
 
-# ---------- 3-4. Круговая диаграмма по полу ----------
 def pie_gender(df, raw=False):
     gender = df["gender"].dropna().astype(str).str.strip()
     if not raw:
-        # модификация: 'female' и 'Female' -> одна категория
         gender = gender.str.capitalize()
     counts = gender.value_counts()
 
@@ -54,7 +54,6 @@ def pie_gender(df, raw=False):
     return fig
 
 
-# ---------- 5. Столбчатая диаграмма по всем категориям ----------
 def bar_all_categories(df):
     counts = df["category"].dropna().value_counts()
     fig, ax = plt.subplots(figsize=(12, 6))
@@ -67,18 +66,17 @@ def bar_all_categories(df):
     return fig
 
 
-# ---------- 7, 9. Топ-n категорий (с настройкой внешнего вида) ----------
 def bar_top_n(df, n):
     counts = df["category"].dropna().value_counts().head(n)
-    counts = counts.sort_values()  # самый большой столбец сверху
+    counts = counts.sort_values()
 
-    fig, ax = plt.subplots(figsize=(10, 0.5 * n + 2))        # размер
-    bars = ax.barh(counts.index, counts.values,              # горизонтальные столбцы
-                   height=0.6,                               # толщина столбцов
-                   color=plt.cm.viridis_r(range(0, 256, max(1, 256 // n)))[:n])  # палитра
-    ax.bar_label(bars, padding=3)                            # подписи значений у столбцов
+    fig, ax = plt.subplots(figsize=(10, 0.5 * n + 2))        
+    bars = ax.barh(counts.index, counts.values,              
+                   height=0.6,                               
+                   color=plt.cm.viridis_r(range(0, 256, max(1, 256 // n)))[:n]) 
+    ax.bar_label(bars, padding=3)                           
     ax.set_title(f"Top {n} Categories with Most Oscar Winners", fontsize=14)
-    ax.set_xlabel("Number of Winners")                       # подписи осей
+    ax.set_xlabel("Number of Winners")                       
     ax.set_ylabel("Category")
     ax.set_xlim(0, counts.max() * 1.1)
     fig.tight_layout()
@@ -103,9 +101,9 @@ def main():
     df = load_data(FILE_NAME)
     print(df)
 
-    fig = pie_gender(df, raw=True)           # шаг 3: «как есть» (видны 'female' и 'Female')
+    fig = pie_gender(df, raw=True)           
     fig.savefig("gender_distribution_raw.png", dpi=150)
-    fig = pie_gender(df)                     # шаг 4: после исправления
+    fig = pie_gender(df)                     
     fig.savefig("gender_distribution.png", dpi=150)
 
     fig = bar_all_categories(df)

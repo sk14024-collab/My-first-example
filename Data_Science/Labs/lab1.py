@@ -75,6 +75,4 @@ print(df_filtered)
 
 print("Mean Score in Filtered DataFrame:", df_filtered["Score"].mean())
 print("Median Score:", df_filtered["Score"].median())
-
-print("Hello world", "this is my code")
 # %%
