@@ -4,7 +4,6 @@ from pathlib import Path
 FILE_NAME = Path(__file__).parent / "oscars.xlsx"
 import sys
 import zipfile
-
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -12,7 +11,6 @@ import pandas as pd
 
 FILE_NAME = "oscars.xlsx"
 REQUIRED_COLUMNS = ["gender", "category"]
-
 
 def load_data(path):
     try:
@@ -41,39 +39,39 @@ def load_data(path):
     return df
 
 
-def pie_gender(df, raw=False):
-    gender = df["gender"].dropna().astype(str).str.strip()
+def pie_gender(df, raw=False):                                # Функция для построение круговой диарграммы распределения по полу
+    gender = df["gender"].dropna().astype(str).str.strip()    # Удаляет пропуски и подстраивает данные под удобную форму
     if not raw:
         gender = gender.str.capitalize()
     counts = gender.value_counts()
 
-    fig, ax = plt.subplots(figsize=(6, 6))
-    ax.pie(counts, labels=counts.index, autopct="%1.1f%%", startangle=90,
-           colors=plt.cm.Set2.colors, wedgeprops={"edgecolor": "white"})
+    fig, ax = plt.subplots(figsize=(6, 6))                    # Создает фигуру и оси для графика
+    ax.pie(counts, labels=counts.index, autopct="%1.1f%%", startangle=90,  
+           colors=plt.cm.Set2.colors, wedgeprops={"edgecolor": "white"})  # Строит круговую диаграмму с процентами и цветами
     ax.set_title("Gender Distribution of Oscar Winners")
     return fig
 
 
 def bar_all_categories(df):
-    counts = df["category"].dropna().value_counts()
-    fig, ax = plt.subplots(figsize=(12, 6))
-    counts.plot(kind="bar", ax=ax, color=plt.cm.Set2.colors[0])
+    counts = df["category"].dropna().value_counts()          # Считает количество победителей по категориям, удаляя пропуски
+    fig, ax = plt.subplots(figsize=(25, 15))                  # Создает фигуру и оси для графикв
+    counts.plot(kind="bar", ax=ax, color=plt.cm.Set2.colors[0])   # Считает число победителей по каждой категории и строит столбчатую диаграмму
     ax.set_title("Number of Oscar Winners by Category")
     ax.set_xlabel("Category")
     ax.set_ylabel("Number of Winners")
-    plt.xticks(rotation=90, fontsize=5)
+    plt.xticks(rotation=45, fontsize=5)      # Поворачивает надписи на 45 градусов и устанавливает размер
     fig.tight_layout()
     return fig
 
 
 def bar_top_n(df, n):
-    counts = df["category"].dropna().value_counts().head(n)
-    counts = counts.sort_values()
+    counts = df["category"].dropna().value_counts().head(n)  # Считает количества победителей
+    counts = counts.sort_values() # Сортирует по возрастанию для горизонтальной диаграммы
 
     fig, ax = plt.subplots(figsize=(10, 0.5 * n + 2))        
     bars = ax.barh(counts.index, counts.values,              
                    height=0.6,                               
-                   color=plt.cm.viridis_r(range(0, 256, max(1, 256 // n)))[:n]) 
+                   color=plt.cm.viridis_r(range(0, 256, max(1, 256 // n)))[:n])  # Создает горизонтальные столбцы с цветами
     ax.bar_label(bars, padding=3)                           
     ax.set_title(f"Top {n} Categories with Most Oscar Winners", fontsize=14)
     ax.set_xlabel("Number of Winners")                       
