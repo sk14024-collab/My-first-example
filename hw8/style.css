@@ -1,0 +1,121 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: tahoma;
+}
+
+.image {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+}
+
+.box1 .image {
+    background-image: url("https://unsplash.it/300/200?1");
+}
+
+.box2 .image {
+    background-image: url("https://unsplash.it/300/200?2");
+}
+
+.box3 .image {
+    background-image: url("https://unsplash.it/300/200?3");
+}
+
+.box4 .image {
+    background-image: url("https://unsplash.it/500/200?4");
+}
+
+.box5 .image {
+    background-image: url("https://unsplash.it/800/200?5");
+}
+
+.container {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.container > * {
+    flex-basis: 200px;
+    border: 2px solid firebrick;
+    flex-grow: 1;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+}
+
+ul > * {
+    background: lightpink;
+    padding: .5rem;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    padding: 1rem;
+}
+
+.box3 > .info {
+    justify-content: space-evenly;
+}
+
+.box1 > .info {
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.box2 > .info {
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.box5 > .info {
+    justify-content: space-between;
+}
+
+.box4 > .info {
+    justify-content: space-around;
+}
+
+
+.box1 ul {
+    justify-content: space-evenly;
+}
+
+.box2 ul {
+    justify-content: center;
+}
+
+.box3 ul {
+    justify-content: flex-end;
+}
+
+.box4 ul {
+    justify-content: space-between;
+}
+
+.box5 ul {
+    justify-content: space-around;
+}
+
+.box5 ul > * {
+    flex-grow: 1;
+}
+
+button {
+    background: firebrick;
+    padding: .5rem;
+    border: none;
+    width: 100%;
+    color: white;
+}
